@@ -18,7 +18,7 @@ fel = 0
 
 
 
-# RESTCONF
+
 
 def get(enhet, path):
     url = f"https://{enheter[enhet]}/restconf/data/{path}"
@@ -52,7 +52,7 @@ def resultat(ok, text):
         fel += 1
 
 
-# Conf av hostname
+
 
 def hostname(enhet):
     data = get(enhet, "Cisco-IOS-XE-native:native/hostname")
@@ -60,7 +60,7 @@ def hostname(enhet):
     resultat(ok, f"{enhet} hostname")
 
 
-# conf av interfaces
+
 def interface(enhet, namn, ratt_ip, ratt_mask):
     data = get(
         enhet,
@@ -119,7 +119,7 @@ def route(enhet, prefix):
     resultat(False, f"{enhet} route {prefix}")
 
 
-# conf av stat
+
 def default_route(enhet, next_hop):
     data = get(enhet, "Cisco-IOS-XE-native:native/ip/route")
 
@@ -137,8 +137,8 @@ def default_route(enhet, next_hop):
     resultat(False, f"{enhet} default route via {next_hop}")
 
 
-# MAX
-print("\n----- MAX -----")
+
+print("\n- MAX -")
 hostname("MAX")
 interface("MAX", "GigabitEthernet0/0/0", "192.168.1.2", "255.255.255.0")
 interface("MAX", "Serial0/1/0", "192.168.2.5", "255.255.255.252")
@@ -149,9 +149,9 @@ route("MAX", "10.10.13.0/24")
 default_route("MAX", "192.168.1.1")
 
 
-# McD
 
-print("\n----- McD -----")
+
+print("\n- McD -")
 hostname("McD")
 interface("McD", "Serial0/1/0", "192.168.2.6", "255.255.255.252")
 interface("McD", "GigabitEthernet0/0/0", "10.10.13.1", "255.255.255.0")
@@ -160,9 +160,9 @@ route("McD", "10.10.13.0/24")
 route("McD", "0.0.0.0/0")
 
 
-# BK
 
-print("\n----- BK -----")
+
+print("\n- BK -")
 hostname("BK")
 interface("BK", "Serial0/1/1", "192.168.2.2", "255.255.255.252")
 interface("BK", "GigabitEthernet0/0/0", "10.10.12.1", "255.255.255.128")
@@ -171,7 +171,7 @@ route("BK", "10.10.12.0/25")
 route("BK", "0.0.0.0/0")
 
 
-# RESULTAT
+
 
 print("\n============================")
 if fel == 0:
