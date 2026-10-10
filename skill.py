@@ -44,7 +44,7 @@ def patch(enhet, path, data, beskrivning):
 
 
 def delete(enhet, path):
-    # om det visar 404 betyder det att det redan var borta, det är ok
+
     try:
         requests.delete(
             bas_url(enhet) + path,
@@ -61,7 +61,7 @@ def koda(namn):
     return namn.replace("/", "%2F")
 
 
-# conf av hsotnames
+
 def hostname(enhet):
     patch(
         enhet,
@@ -115,7 +115,7 @@ def serial(enhet, namn, ip, mask):
         "Cisco-IOS-XE-native:native/interface/Serial=" + koda(namn) + "/shutdown"
     )
 
-#conf av EIGRP
+
 def eigrp(enhet, networks, redistribuera_static=False):
     instans = {
         "autonomous-system": 100,
@@ -158,7 +158,7 @@ def eigrp(enhet, networks, redistribuera_static=False):
     )
 
 
-# DEFAULT ROUTE (native)
+
 
 def default_route(enhet, next_hop):
     data = {
@@ -178,13 +178,13 @@ def default_route(enhet, next_hop):
     )
 
 
-# MAX
 
-print("\n----- MAX -----")
+
+print("\n- MAX -")
 hostname("MAX")
-interface("MAX", "GigabitEthernet0/0/0", "192.168.1.2", "255.255.255.0")  # Internet
-serial("MAX", "0/1/0", "192.168.2.5", "255.255.255.252")                   # mot McD
-serial("MAX", "0/1/1", "192.168.2.1", "255.255.255.252")                   # mot BK
+interface("MAX", "GigabitEthernet0/0/0", "192.168.1.2", "255.255.255.0")  
+serial("MAX", "0/1/0", "192.168.2.5", "255.255.255.252")                   
+serial("MAX", "0/1/1", "192.168.2.1", "255.255.255.252")                   
 default_route("MAX", "192.168.1.1")
 eigrp("MAX", [
     ("192.168.2.4", "0.0.0.3"),  
@@ -192,28 +192,28 @@ eigrp("MAX", [
 ], redistribuera_static=True)
 
 
-# McD
 
-print("\n----- McD -----")
+
+print("\n- McD -")
 hostname("McD")
-serial("McD", "0/1/0", "192.168.2.6", "255.255.255.252")                   # mot MAX
-interface("McD", "GigabitEthernet0/0/0", "10.10.13.1", "255.255.255.0")   # PC
+serial("McD", "0/1/0", "192.168.2.6", "255.255.255.252")                   
+interface("McD", "GigabitEthernet0/0/0", "10.10.13.1", "255.255.255.0")   
 eigrp("McD", [
     ("192.168.2.4", "0.0.0.3"),
     ("10.10.13.0", "0.0.0.255")
 ])
 
 
-# BK
 
-print("\n----- BK -----")
+
+print("\n- BK -")
 hostname("BK")
-serial("BK", "0/1/1", "192.168.2.2", "255.255.255.252")                    # mot MAX
-interface("BK", "GigabitEthernet0/0/0", "10.10.12.1", "255.255.255.128")  # PC
+serial("BK", "0/1/1", "192.168.2.2", "255.255.255.252")                   
+interface("BK", "GigabitEthernet0/0/0", "10.10.12.1", "255.255.255.128")  
 eigrp("BK", [
     ("192.168.2.0", "0.0.0.3"),
     ("10.10.12.0", "0.0.0.127")
 ])
 
-# om allt är confad
+
 print("\nConfen är klar")
